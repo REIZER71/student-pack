@@ -116,6 +116,7 @@ private:
 	string name;
 	bool sex;
 	int s;
+	bool mood;
 	vector <string> SubjectList;//subject vector (teacher can grade students on subjects from that vector )
 	bool IsUniversal;// if teacher is universal => can grade student ignoring student subject list
 public:
@@ -144,7 +145,21 @@ public:
 	}
 	void addGrade(string SName, student pupil)// it works when teacher has input subject in subject list (or teacher is universal) and student has input subject in subject list
 	{
-		int grade = (rand() % 4) + 2;
+		int grade;
+		if (pupil.IsHonorsStudent(SName) == true)
+		{
+			if (mood == 1)
+				grade = 5;
+			else
+				grade = (rand() % 2) + 4;
+		}
+		else
+		{
+			if (mood == 1)
+				grade = 4;
+			else
+				grade = (rand() % 2) + 2;
+		}
 		int current = 0;
 		if ((IsUniversal == false) and (SubjectCheck(SName, current) == false))
 		{
@@ -164,6 +179,7 @@ public:
 		}
 	}
 	void setUniversal(bool T) { IsUniversal = T; }
+	void setMood(bool m) { mood = m; }
 	teacher(string n, bool s)
 	{
 		name = n;
@@ -185,6 +201,8 @@ public:
 			IsUniversal = false;
 			cout << "This teacher is common teacher" << endl;
 		}
+		 mood = (rand() % 2);
+
 	}
 };
 int main() 
